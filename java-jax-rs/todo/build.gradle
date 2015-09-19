@@ -20,6 +20,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 
     // js
-    runtime 'org.webjars:angularjs:1.4.4'
+    runtime 'org.webjars:mithril:0.2.0'
     runtime 'org.webjars:jquery:2.1.4'
+    runtime 'org.webjars.bower:purecss:0.6.0'
 }
