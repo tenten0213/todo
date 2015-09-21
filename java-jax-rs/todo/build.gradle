@@ -22,5 +22,5 @@ dependencies {
     // js
     runtime 'org.webjars:mithril:0.2.0'
     runtime 'org.webjars:jquery:2.1.4'
-    runtime 'org.webjars.bower:purecss:0.6.0'
+    runtime 'org.webjars.npm:purecss:0.6.0'
 }
