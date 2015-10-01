@@ -1,34 +1,56 @@
 <!doctype html>
 <script src="./js/mithril.min.js"></script>
 <script>
-  //このアプリケーションは、todoコンポーネントを1つだけ持つ
-  var todo = {};
+  // このアプリケーションは、todoコンポーネントを1つだけ持つ
+  var todo = {}; // こいつがコンポーネント
 
-  //コードをシンプルにするために、このコンポーネントをモデルクラスの名前空間としても流用する
+  // コードをシンプルにするために、このコンポーネントをモデルクラスの名前空間としても流用する
 
-  //Todoクラスは2つのプロパティを持つ
+  // Todoクラスは2つのプロパティを持つ
+  // Todoモデルクラス
+  // 通常、モデルクラスは他のコンポーネントでも利用されるためコンポーネント外に定義するが、
+  // 今回はすべてのアプリケーションがtodoコンポーネントに収まっているのでtodoコンポーネント内にいれる
   todo.Todo = function(data) {
+
+    /**
+     // m.propはgetter, setterを作るためのファクトリ
+     // 'John'を初期値として、getter-setterを定義する
+     var a_name = m.prop("John");
+
+     // 値を取得する
+     var a = a_name(); //a == "John"
+
+     // 値を`Mary`に設定する
+     a_name("Mary"); //Mary
+
+     // 値を取得する
+     var b = a_name(); //b == "Mary"
+    */
+
     this.description = m.prop(data.description);
     this.done = m.prop(false);
   };
 
-  //TodoListクラスはtodoの配列
   todo.TodoList = Array;
 
-  //ビュー・モデルは表示されているTodoのリストを管理し、
-  //作成が完了する前のTodoの説明を格納したり、
-  //作成が可能かどうかを判定するロジックや、
-  //Todoが追加された後にテキスト入力をクリアする責務を持つ
+  // ビュー・モデルは表示されているTodoのリストを管理し、
+  // 作成が完了する前のTodoの説明を格納したり、
+  // 作成が可能かどうかを判定するロジックや、
+  // Todoが追加された後にテキスト入力をクリアする責務を持つ
+  // MithrilではUIの状態はORMエンティティにマッピングされる必要はないが、
+  // ビューモデルとして管理すべきという考え方
   todo.vm = (function() {
     var vm = {}
     vm.init = function() {
-      //アクティブなToDoのリスト
+      // アクティブなToDoのリスト
       vm.list = new todo.TodoList();
 
-      //新しいToDoを作成する前の、入力中のToDoの名前を保持するスロット
+      // 新しいToDoを作成する前の、入力中のToDoの名前を保持する
       vm.description = m.prop("");
 
-      //ToDoをリストに登録し、ユーザが使いやすいようにdescriptionフィールドをクリアする
+      // ToDoをリストに登録
+      // ユーザが使いやすいようにdescriptionフィールドをクリアする
+      // こういったUIの状態を操作する責務
       vm.add = function() {
         if (vm.description()) {
           vm.list.push(new todo.Todo({description: vm.description()}));
@@ -39,13 +61,13 @@
     return vm
   }())
 
-  //コントローラは、モデルの中のどの部分が、現在のページと関連するのかを定義している
-  //この場合は１つのビュー・モデルですべてを取り仕切っている
+  // コントローラは、モデルの中のどの部分が、現在のページと関連するのかを定義している
+  // この場合は１つのビュー・モデルですべてを取り仕切っている
   todo.controller = function() {
     todo.vm.init()
   }
 
-  //これがビュー
+  // これがビュー
   todo.view = function() {
     return m("html", [
       m("body", [
