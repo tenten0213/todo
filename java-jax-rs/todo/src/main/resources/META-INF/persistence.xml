@@ -5,6 +5,9 @@
              version="2.1">
   <persistence-unit name="default" transaction-type="JTA">
 
+    <!-- Eclipseになっているので、EclipseLink使う前提 -->
+    <!-- DBMSは切り替えられるようにJPAのAPIを指定 -->
+    <!-- APサーバ側の設定で指定する必要がある -->
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <jta-data-source>jdbc/todo</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
